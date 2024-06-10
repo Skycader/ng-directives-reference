@@ -1,8 +1,6 @@
-<h1 *appNgIf="condition">Hello</h1>
-<h2 *ngIf="condition">123</h2>
-<button (click)="condition = !condition">toggle</button>
-<!-- <div class="p-3"> -->
-<!--   <mat-slider min="0" max="1" showTickMarks discrete> -->
-<!--     <input matSliderThumb [(ngModel)]="condition" /> -->
-<!--   </mat-slider> -->
-<!-- </div> -->
+<br />
+<div [appNgIf]="condition"></div>
+<br />
+<button mat-raised-button color="primary" (click)="condition = !condition">
+  toggle
+</button>

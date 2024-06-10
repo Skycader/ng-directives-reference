@@ -1,21 +1,22 @@
 import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
 
 @Directive({
-  selector: '[appNgWhile]',
+  selector: '[appNgLoop][appNgLoopOf]',
 })
-export class NgWhileDirective {
-  public count: number = 0;
+export class NgForDirective {
   constructor(
     private templateRef: TemplateRef<any>,
     private viewContainer: ViewContainerRef,
   ) {}
 
-  @Input('appNgWhile') set while(iterator: number) {
-    while (this.count < iterator) {
+  @Input('appNgLoopOf')
+  set myForOf(collection: any) {
+    this.viewContainer.clear();
+    collection.forEach((item: any, index: any) => {
       this.viewContainer.createEmbeddedView(this.templateRef, {
-        $implicit: this.count,
+        $implicit: item,
+        index,
       });
-      this.count++;
-    }
+    });
   }
 }

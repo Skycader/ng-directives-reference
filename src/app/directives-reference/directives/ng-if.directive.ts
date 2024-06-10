@@ -5,26 +5,30 @@ import {
   Renderer2,
   TemplateRef,
   ViewContainerRef,
-} from "@angular/core";
+} from '@angular/core';
 
 @Directive({
-  selector: "[appNgIf]",
+  selector: '[appNgIf]',
 })
 export class NgIfDirective {
   public count: number = 0;
   constructor(
-    private templateRef: TemplateRef<any>,
-    private viewContainer: ViewContainerRef,
     private el: ElementRef,
     private r: Renderer2,
-  ) { }
+  ) {}
 
-  @Input("appNgIf") set if(displayBlock: boolean) {
-    console.log(this.viewContainer.element.nativeElement);
+  @Input('appNgIf') set if(displayBlock: boolean) {
     if (displayBlock) {
-      this.viewContainer.createEmbeddedView(this.templateRef);
+      this.r.setStyle(this.el.nativeElement, 'opacity', '1');
+      this.r.setStyle(this.el.nativeElement, 'max-height', '100%');
     } else {
-      this.viewContainer.clear();
+      this.r.setStyle(this.el.nativeElement, 'opacity', '0');
+      this.r.setStyle(this.el.nativeElement, 'max-height', '0%');
     }
+  }
+
+  ngAfterViewInit() {
+    this.r.setStyle(this.el.nativeElement, 'transition-duration', '0.5s');
+    this.r.setStyle(this.el.nativeElement, 'max-height', '100%');
   }
 }
